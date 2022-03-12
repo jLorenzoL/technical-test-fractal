@@ -6,19 +6,15 @@ import com.fractal.demo.technicaltestfractal.exception.BussinessExcepcion;
 import com.fractal.demo.technicaltestfractal.service.ProductService;
 import com.fractal.demo.technicaltestfractal.util.JsonManagerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.Map;
 
 @RestController
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    ProductService productService;
 
     @PostMapping("/saveProduct")
     public Map<String, Object> saveProduct(@RequestBody ProductDto productDto){
@@ -40,6 +36,16 @@ public class ProductController {
                     .buildResponse("products", productService.getProductList(productRequest)).getResponse();
         } catch (Exception ex) {
             return JsonManagerResponse.processError(ex).getResponse();
+        }
+    }
+
+    @GetMapping("/product/{id}")
+    public Map<String, Object> getProductInfo(@PathVariable String id){
+        try{
+            return new JsonManagerResponse("Correct process.", Boolean.TRUE)
+                    .buildResponse("product", productService.getInfoProduct(id)).getResponse();
+        }catch (Exception ex) {
+            return new JsonManagerResponse(ex.getMessage(), Boolean.FALSE).getResponse();
         }
     }
 

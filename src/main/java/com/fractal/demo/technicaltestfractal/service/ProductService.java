@@ -78,5 +78,26 @@ public class ProductService {
         }
     }
 
+    public ProductDto getInfoProduct(String id){
+
+        ProductDto productDto = new ProductDto();
+        try {
+            if(!Objects.isNull(id)){
+                ProductEntity productEntity = productRepository.getProductInfo(id);
+                productDto.setId(productEntity.getId());
+                productDto.setName(productEntity.getName());
+                productDto.setCategory(productEntity.getCategory());
+                productDto.setUnitPrice(productEntity.getUnitPrice());
+                productDto.setState(productEntity.isState());
+            }else {
+                throw new BussinessExcepcion("Theres an error during the process, parameter null");
+            }
+        } catch (Exception ex) {
+            throw new BussinessExcepcion(ex.getMessage());
+        }
+
+        return productDto;
+    }
+
 
 }

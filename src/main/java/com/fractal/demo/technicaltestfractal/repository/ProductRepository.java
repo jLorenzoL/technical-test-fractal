@@ -54,5 +54,9 @@ public class ProductRepository {
         mongoTemplate.findAllAndRemove(query, ProductEntity.class);
     }
 
+    public ProductEntity getProductInfo(String id){
+        return mongoTemplate.findById(id, ProductEntity.class);
+    }
+
 
 }
