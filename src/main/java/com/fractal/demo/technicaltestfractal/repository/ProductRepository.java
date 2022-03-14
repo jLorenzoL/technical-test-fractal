@@ -58,5 +58,26 @@ public class ProductRepository {
         return mongoTemplate.findById(id, ProductEntity.class);
     }
 
+    public Page<ProductEntity> getProductsByPagination(Query query, Pageable pageable){
+
+        List<ProductEntity> list = getProducts(query);
+
+        if(list.isEmpty()){
+            return null;
+        }
+
+        long count = mongoTemplate.count(new Query(), ProductEntity.class);
+        Page<ProductEntity> resultPage = new PageImpl<>(list, pageable, count);
+        return resultPage;
+    }
+
+    public List<ProductEntity> getProducts(Query query){
+        return mongoTemplate.find(query,ProductEntity.class);
+    }
+
+    public List<ProductEntity> getListProductActive(){
+        Query query = Query.query(Criteria.where("state").is(true));
+        return  mongoTemplate.find(query, ProductEntity.class);
+    }
 
 }

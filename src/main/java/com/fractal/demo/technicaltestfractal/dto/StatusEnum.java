@@ -31,10 +31,4 @@ public enum StatusEnum {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public static StatusEnum getDescription(final Integer id){
-        return Arrays.stream(StatusEnum.values()).filter(e->e.id.equals(id))
-                .findFirst()
-                .orElse(null);
-    }
 }

@@ -29,11 +29,11 @@ public class ProductController {
         return response;
     }
 
-    @GetMapping("/products")
+    @PostMapping("/products")
     public Map<String, Object> getProductList(@RequestBody ProductRequest productRequest){
         try{
             return new JsonManagerResponse("Correct process.", Boolean.TRUE)
-                    .buildResponse("products", productService.getProductList(productRequest)).getResponse();
+                    .buildResponse("result", productService.getProductList(productRequest)).getResponse();
         } catch (Exception ex) {
             return JsonManagerResponse.processError(ex).getResponse();
         }
@@ -73,5 +73,15 @@ public class ProductController {
         }
 
         return response;
+    }
+
+    @PostMapping("/listProductActive")
+    public Map<String, Object> getProductListActive(){
+        try{
+            return new JsonManagerResponse("Correct process.", Boolean.TRUE)
+                    .buildResponse("products", productService.getActiveProducts()).getResponse();
+        } catch (Exception ex) {
+            return JsonManagerResponse.processError(ex).getResponse();
+        }
     }
 }
